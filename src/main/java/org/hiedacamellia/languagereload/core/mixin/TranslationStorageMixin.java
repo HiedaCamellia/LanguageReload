@@ -5,8 +5,8 @@ import net.minecraft.client.resources.language.ClientLanguage;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.resources.ResourceManager;
-import org.hiedacamellia.languagereload.core.interfaces.ITranslationStorage;
-import org.hiedacamellia.languagereload.core.config.CommonConfig;
+import org.hiedacamellia.languagereload.core.access.ITranslationStorage;
+import org.hiedacamellia.languagereload.core.config.ClientConfig;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -42,7 +42,7 @@ abstract class TranslationStorageMixin extends Language implements ITranslationS
     @Redirect(method = "appendFrom(Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/util/Map;)V", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/locale/Language;loadFromJson(Ljava/io/InputStream;Ljava/util/function/BiConsumer;Ljava/util/function/BiConsumer;)V"))
     private static void onInternalLoad$saveSeparately(InputStream inputStream, BiConsumer<String, String> entryConsumer, BiConsumer<String, Component> entry,String langCode) {
-        if (CommonConfig.multilingualItemSearch.get()) {
+        if (ClientConfig.multilingualItemSearch) {
             Language.loadFromJson(inputStream, entryConsumer.andThen((key, value) ->
                     separateTranslationsOnLoad.computeIfAbsent(langCode, k -> Maps.newHashMap()).put(key, value)));
         } else Language.loadFromJson(inputStream, entryConsumer);

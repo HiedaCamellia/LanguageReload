@@ -1,6 +1,5 @@
 package org.hiedacamellia.languagereload.client.gui;
 
-import jerozgen.languagereload.LanguageReload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.*;
@@ -8,7 +7,8 @@ import net.minecraft.client.resources.language.LanguageInfo;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import org.hiedacamellia.languagereload.core.interfaces.ILanguageOptionsScreen;
+import org.hiedacamellia.languagereload.LanguageReload;
+import org.hiedacamellia.languagereload.core.access.ILanguageOptionsScreen;
 import org.joml.Vector2i;
 
 import java.util.ArrayList;
@@ -19,17 +19,17 @@ public class LanguageEntry extends ObjectSelectionList.Entry<LanguageEntry> {
     private static final Component DEFAULT_LANGUAGE_TOOLTIP = Component.translatable("language.default.tooltip");
 
     private static final WidgetSprites ADD_TEXTURES = new WidgetSprites(
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MOD_ID, "language_selection/add"),
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MOD_ID, "language_selection/add_highlighted"));
+            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/add.png"),
+            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/add_highlighted.png"));
     private static final WidgetSprites REMOVE_TEXTURES = new WidgetSprites(
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MOD_ID, "language_selection/remove"),
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MOD_ID, "language_selection/remove_highlighted"));
+            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/remove.png"),
+            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/remove_highlighted.png"));
     private static final WidgetSprites MOVE_UP_TEXTURES = new WidgetSprites(
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MOD_ID, "language_selection/move_up"),
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MOD_ID, "language_selection/move_up_highlighted"));
+            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/move_up.png"),
+            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/move_up_highlighted.png"));
     private static final WidgetSprites MOVE_DOWN_TEXTURES = new WidgetSprites(
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MOD_ID, "language_selection/move_down"),
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MOD_ID, "language_selection/move_down_highlighted"));
+            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/move_down.png"),
+            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/move_down_highlighted.png"));
 
     private final Minecraft client = Minecraft.getInstance();
 
@@ -54,7 +54,7 @@ public class LanguageEntry extends ObjectSelectionList.Entry<LanguageEntry> {
     }
 
     protected Button addButton(int width, int height, WidgetSprites textures, Button.OnPress action) {
-        var button = new ImageButton(0, 0, width, height, textures, action);
+        var button = new CamelliaImageButton(0, 0, width, height, textures, action);
         button.visible = false;
         buttons.add(button);
         return button;

@@ -1,11 +1,11 @@
 package org.hiedacamellia.languagereload.core.mixin;
 
-import jerozgen.languagereload.LanguageReload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.locale.Language;
 import net.minecraft.nbt.CompoundTag;
-import org.hiedacamellia.languagereload.core.config.CommonConfig;
+import org.hiedacamellia.languagereload.LanguageReload;
+import org.hiedacamellia.languagereload.core.config.ClientConfig;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -47,20 +47,23 @@ abstract class GameOptionsMixin {
 
     @Unique
     private static void checkConfigLanguage(String language) {
-        if (!CommonConfig.language.get().equals(language)) {
+        if (!ClientConfig.language.equals(language)) {
             LanguageReload.LOGGER.info(
                     "Game language ({}) and config language ({}) are different. Updating config",
                     language,
-                    CommonConfig.language
+                    ClientConfig.LANGUAGE
             );
-            CommonConfig.previousLanguage.set(CommonConfig.language.get());
-            CommonConfig.previousFallbacks.set(CommonConfig.fallbacks.get());
-            CommonConfig.language.set(language);
-            CommonConfig.fallbacks.set(new LinkedList<>());
+            if(!ClientConfig.SPEC.isLoaded())return;
+            ClientConfig.PREVIOUS_LANGUAGE.set(ClientConfig.language);
+            ClientConfig.PREVIOUS_FALLBACKS.set(ClientConfig.fallbacks);
+            ClientConfig.LANGUAGE.set(language);
+            ClientConfig.FALLBACKS.set(new LinkedList<>());
             if (!language.equals(Language.DEFAULT)) {
-                var a = CommonConfig.fallbacks.get();a.add(Language.DEFAULT);
-                CommonConfig.fallbacks.set(a);
+                var a = ClientConfig.fallbacks;
+                a.add(Language.DEFAULT);
+                ClientConfig.FALLBACKS.set(a);
             }
+            ClientConfig.SPEC.save();
         }
     }
 }

@@ -1,10 +1,10 @@
 package org.hiedacamellia.languagereload.core.mixin;
 
-import jerozgen.languagereload.LanguageReload;
 import net.minecraft.client.gui.ComponentPath;
 import net.minecraft.client.gui.components.StringWidget;
 import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.network.chat.Component;
+import org.hiedacamellia.languagereload.LanguageReload;
 import org.hiedacamellia.languagereload.client.gui.LanguageEntry;
 import org.hiedacamellia.languagereload.client.gui.LanguageListWidget;
 import net.minecraft.client.Options;
@@ -13,8 +13,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.options.LanguageSelectScreen;
 import net.minecraft.client.gui.screens.options.OptionsSubScreen;
 import net.minecraft.client.resources.language.LanguageManager;
-import org.hiedacamellia.languagereload.core.interfaces.ILanguageOptionsScreen;
-import org.hiedacamellia.languagereload.core.config.CommonConfig;
+import org.hiedacamellia.languagereload.core.access.ILanguageOptionsScreen;
+import org.hiedacamellia.languagereload.core.config.ClientConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -38,7 +38,7 @@ public abstract class LanguageOptionsScreenMixin extends OptionsSubScreen implem
         var currentLangCode = languageManager.getSelected();
         if (!currentLangCode.equals(LanguageReload.NO_LANGUAGE))
             selectedLanguages.add(currentLangCode);
-        selectedLanguages.addAll(CommonConfig.fallbacks.get());
+        selectedLanguages.addAll(ClientConfig.fallbacks);
         languageManager.getLanguages().forEach((code, language) ->
                 languageEntries.put(code, new LanguageEntry(this::refresh, code, language, selectedLanguages)));
 

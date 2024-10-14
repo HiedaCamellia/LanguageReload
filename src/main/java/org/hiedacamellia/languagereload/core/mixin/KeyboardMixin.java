@@ -1,14 +1,14 @@
 package org.hiedacamellia.languagereload.core.mixin;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import jerozgen.languagereload.LanguageReload;
 import net.minecraft.client.KeyboardHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.LanguageInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
-import org.hiedacamellia.languagereload.core.config.CommonConfig;
+import org.hiedacamellia.languagereload.LanguageReload;
+import org.hiedacamellia.languagereload.core.config.ClientConfig;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Objects;
 
 @Mixin(KeyboardHandler.class)
@@ -37,18 +38,18 @@ public abstract class KeyboardMixin {
         if (Screen.hasShiftDown()) {
             var languageManager = minecraft.getLanguageManager();
 
-            var language = languageManager.getLanguage(CommonConfig.previousLanguage.get());
-            var noLanguage = CommonConfig.previousLanguage.equals(LanguageReload.NO_LANGUAGE);
+            var language = languageManager.getLanguage(ClientConfig.previousLanguage);
+            var noLanguage = ClientConfig.previousLanguage.equals(LanguageReload.NO_LANGUAGE);
             if (language == null && !noLanguage) {
                 debugWarningTranslated("debug.reload_languages.switch.failure");
             } else {
-                LanguageReload.setLanguage(CommonConfig.previousLanguage.get(), CommonConfig.previousFallbacks.get());
+                LanguageReload.setLanguage(ClientConfig.previousLanguage, (LinkedList<String>) ClientConfig.previousFallbacks);
                 var languages = new ArrayList<Component>() {{
                     if (noLanguage)
-                        add(Component.literal("∅"));
+                        add(Component.literal("\u2205"));
                     if (language != null)
                         add(language.toComponent());
-                    addAll(CommonConfig.fallbacks.get().stream()
+                    addAll(ClientConfig.fallbacks.stream()
                             .map(languageManager::getLanguage)
                             .filter(Objects::nonNull)
                             .map(LanguageInfo::toComponent)

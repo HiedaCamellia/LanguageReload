@@ -7,9 +7,9 @@ import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.network.chat.contents.TranslatableFormatException;
-import org.hiedacamellia.languagereload.core.interfaces.ILanguage;
-import org.hiedacamellia.languagereload.core.interfaces.ITranslationStorage;
-import org.hiedacamellia.languagereload.core.config.CommonConfig;
+import org.hiedacamellia.languagereload.core.access.ILanguage;
+import org.hiedacamellia.languagereload.core.access.ITranslationStorage;
+import org.hiedacamellia.languagereload.core.config.ClientConfig;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,7 +36,7 @@ abstract class TranslatableTextContentMixin implements ComponentContents {
 
     @Inject(method = "decompose", at = @At("RETURN"))
     void onUpdatedecomposedParts(CallbackInfo ci) {
-        if (!CommonConfig.multilingualItemSearch.get()) return;
+        if (!ClientConfig.multilingualItemSearch) return;
         if (decomposedWith == null) return;
 
         var decomposedPartstorage = ((ILanguage) decomposedWith).languagereload_getTranslationStorage();

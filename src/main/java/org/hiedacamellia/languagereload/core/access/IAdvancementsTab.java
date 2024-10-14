@@ -1,9 +1,9 @@
-package org.hiedacamellia.languagereload.core.interfaces;
+package org.hiedacamellia.languagereload.core.access;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public interface IAdvancementsScreen {
+public interface IAdvancementsTab {
     void languagereload_recreateWidgets();
 }

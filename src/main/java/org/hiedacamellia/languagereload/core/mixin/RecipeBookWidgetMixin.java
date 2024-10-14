@@ -1,9 +1,8 @@
 package org.hiedacamellia.languagereload.core.mixin;
 
-import jerozgen.languagereload.LanguageReload;
-
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.locale.Language;
+import org.hiedacamellia.languagereload.LanguageReload;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

@@ -1,4 +1,4 @@
-package org.hiedacamellia.languagereload.core.interfaces;
+package org.hiedacamellia.languagereload.core.access;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;

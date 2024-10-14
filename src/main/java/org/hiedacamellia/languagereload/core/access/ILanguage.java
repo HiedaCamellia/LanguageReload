@@ -1,4 +1,4 @@
-package org.hiedacamellia.languagereload.core.interfaces;
+package org.hiedacamellia.languagereload.core.access;
 
 
 import net.minecraft.client.resources.language.ClientLanguage;
