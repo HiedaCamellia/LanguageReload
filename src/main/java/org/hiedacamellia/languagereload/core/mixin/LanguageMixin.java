@@ -3,7 +3,7 @@ package org.hiedacamellia.languagereload.core.mixin;
 
 import net.minecraft.client.resources.language.ClientLanguage;
 import net.minecraft.locale.Language;
-import org.hiedacamellia.languagereload.core.access.ILanguage;
+import org.hiedacamellia.languagereload.core.interfaces.ILanguage;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;

@@ -1,4 +1,4 @@
-package org.hiedacamellia.languagereload.core.mixin;
+package org.hiedacamellia.languagereload.core.access;
 
 import net.minecraft.client.multiplayer.ClientChunkCache;
 import net.minecraft.world.level.chunk.LevelChunk;

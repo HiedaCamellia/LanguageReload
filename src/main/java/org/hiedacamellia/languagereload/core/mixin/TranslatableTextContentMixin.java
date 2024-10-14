@@ -2,14 +2,14 @@ package org.hiedacamellia.languagereload.core.mixin;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
-import jerozgen.languagereload.access.ILanguage;
-import jerozgen.languagereload.access.ITranslationStorage;
-import jerozgen.languagereload.config.Config;
-import net.minecraft.text.StringVisitable;
-import net.minecraft.text.TextContent;
-import net.minecraft.text.TranslatableTextContent;
-import net.minecraft.text.TranslationException;
-import net.minecraft.util.Language;
+import net.minecraft.locale.Language;
+import net.minecraft.network.chat.ComponentContents;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.network.chat.contents.TranslatableFormatException;
+import org.hiedacamellia.languagereload.core.interfaces.ILanguage;
+import org.hiedacamellia.languagereload.core.interfaces.ITranslationStorage;
+import org.hiedacamellia.languagereload.core.config.CommonConfig;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,58 +24,57 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-@Mixin(TranslatableTextContent.class)
-abstract class TranslatableTextContentMixin implements TextContent {
+@Mixin(TranslatableContents.class)
+abstract class TranslatableTextContentMixin implements ComponentContents {
     @Unique private @Nullable String previousTargetLanguage;
-    @Unique private final Map<String, List<StringVisitable>> separateTranslationsCache = Maps.newHashMap();
-    @Unique private @Nullable List<StringVisitable> savedTranslations;
+    @Unique private final Map<String, List<FormattedText>> separatedecomposedPartsCache = Maps.newHashMap();
+    @Unique private @Nullable List<FormattedText> saveddecomposedParts;
 
     @Shadow @Final private String key;
-    @Shadow private @Nullable Language languageCache;
-    @Shadow private List<StringVisitable> translations;
+    @Shadow private @Nullable Language decomposedWith;
+    @Shadow private List<FormattedText> decomposedParts;
 
-    @Inject(method = "updateTranslations", at = @At("RETURN"))
-    void onUpdateTranslations(CallbackInfo ci) {
-        if (Config.getInstance() == null) return;
-        if (!Config.getInstance().multilingualItemSearch) return;
-        if (languageCache == null) return;
+    @Inject(method = "decompose", at = @At("RETURN"))
+    void onUpdatedecomposedParts(CallbackInfo ci) {
+        if (!CommonConfig.multilingualItemSearch.get()) return;
+        if (decomposedWith == null) return;
 
-        var translationStorage = ((ILanguage) languageCache).languagereload_getTranslationStorage();
-        if (translationStorage == null) return;
+        var decomposedPartstorage = ((ILanguage) decomposedWith).languagereload_getTranslationStorage();
+        if (decomposedPartstorage == null) return;
 
-        var targetLanguage = ((ITranslationStorage) translationStorage).languagereload_getTargetLanguage();
+        var targetLanguage = ((ITranslationStorage) decomposedPartstorage).languagereload_getTargetLanguage();
         if (Objects.equals(previousTargetLanguage, targetLanguage)) return;
 
         if (targetLanguage == null) {
             previousTargetLanguage = null;
-            translations = savedTranslations;
-            savedTranslations = null;
+            decomposedParts = saveddecomposedParts;
+            saveddecomposedParts = null;
             return;
         }
 
         if (previousTargetLanguage == null) {
-            savedTranslations = translations;
+            saveddecomposedParts = decomposedParts;
         }
         previousTargetLanguage = targetLanguage;
-        translations = separateTranslationsCache.computeIfAbsent(targetLanguage, k -> {
-            var string = languageCache.get(key);
+        decomposedParts = separatedecomposedPartsCache.computeIfAbsent(targetLanguage, k -> {
+            var string = decomposedWith.getOrDefault(key);
             try {
-                var builder = new ImmutableList.Builder<StringVisitable>();
-                this.forEachPart(string, builder::add);
+                var builder = new ImmutableList.Builder<FormattedText>();
+                this.decomposeTemplate(string, builder::add);
                 return builder.build();
-            } catch (TranslationException e) {
-                return ImmutableList.of(StringVisitable.plain(string));
+            } catch (TranslatableFormatException e) {
+                return ImmutableList.of(FormattedText.of(string));
             }
         });
     }
 
-    @Inject(method = "updateTranslations", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/util/Language;get(Ljava/lang/String;)Ljava/lang/String;"))
-    void onUpdateTranslations$clearCache(CallbackInfo ci) {
+    @Inject(method = "decompose", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/locale/Language;getComponent(Ljava/lang/String;)Lnet/minecraft/network/chat/Component;"))
+    void onUpdatedecomposedParts$clearCache(CallbackInfo ci) {
         previousTargetLanguage = null;
-        separateTranslationsCache.clear();
-        savedTranslations = null;
+        separatedecomposedPartsCache.clear();
+        saveddecomposedParts = null;
     }
 
-    @Shadow protected abstract void forEachPart(String translation, Consumer<StringVisitable> partsConsumer);
+    @Shadow protected abstract void decomposeTemplate(String translation, Consumer<FormattedText> partsConsumer);
 }

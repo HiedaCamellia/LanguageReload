@@ -1,11 +1,12 @@
 package org.hiedacamellia.languagereload.core.mixin;
 
 import com.google.common.collect.Maps;
-import jerozgen.languagereload.access.ITranslationStorage;
-import jerozgen.languagereload.config.Config;
-import net.minecraft.client.resource.language.TranslationStorage;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Language;
+import net.minecraft.client.resources.language.ClientLanguage;
+import net.minecraft.locale.Language;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.resources.ResourceManager;
+import org.hiedacamellia.languagereload.core.interfaces.ITranslationStorage;
+import org.hiedacamellia.languagereload.core.config.CommonConfig;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
-@Mixin(TranslationStorage.class)
+@Mixin(ClientLanguage.class)
 abstract class TranslationStorageMixin extends Language implements ITranslationStorage {
     @Unique private @Nullable String targetLanguage;
     @Unique private static Map<String, Map<String, String>> separateTranslationsOnLoad;
@@ -32,22 +33,22 @@ abstract class TranslationStorageMixin extends Language implements ITranslationS
         separateTranslationsOnLoad = null;
     }
 
-    @Inject(method = "load(Lnet/minecraft/resource/ResourceManager;Ljava/util/List;Z)Lnet/minecraft/client/resource/language/TranslationStorage;",
+    @Inject(method = "loadFrom(Lnet/minecraft/server/packs/resources/ResourceManager;Ljava/util/List;Z)Lnet/minecraft/client/resources/language/ClientLanguage;",
             at = @At("HEAD"))
-    private static void onLoad(ResourceManager resourceManager, List<String> definitions, boolean rightToLeft, CallbackInfoReturnable<TranslationStorage> cir) {
+    private static void onLoad(ResourceManager resourceManager, List<String> definitions, boolean rightToLeft, CallbackInfoReturnable<ClientLanguage> cir) {
         separateTranslationsOnLoad = Maps.newHashMap();
     }
 
-    @Redirect(method = "load(Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)V", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/util/Language;load(Ljava/io/InputStream;Ljava/util/function/BiConsumer;)V"))
-    private static void onInternalLoad$saveSeparately(InputStream inputStream, BiConsumer<String, String> entryConsumer, String langCode) {
-        if (Config.getInstance().multilingualItemSearch) {
-            Language.load(inputStream, entryConsumer.andThen((key, value) ->
+    @Redirect(method = "appendFrom(Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/util/Map;)V", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/locale/Language;loadFromJson(Ljava/io/InputStream;Ljava/util/function/BiConsumer;Ljava/util/function/BiConsumer;)V"))
+    private static void onInternalLoad$saveSeparately(InputStream inputStream, BiConsumer<String, String> entryConsumer, BiConsumer<String, Component> entry,String langCode) {
+        if (CommonConfig.multilingualItemSearch.get()) {
+            Language.loadFromJson(inputStream, entryConsumer.andThen((key, value) ->
                     separateTranslationsOnLoad.computeIfAbsent(langCode, k -> Maps.newHashMap()).put(key, value)));
-        } else Language.load(inputStream, entryConsumer);
+        } else Language.loadFromJson(inputStream, entryConsumer);
     }
 
-    @Inject(method = "get", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "getOrDefault", at = @At(value = "HEAD"), cancellable = true)
     void onGet(String key, String fallback, CallbackInfoReturnable<String> cir) {
         if (targetLanguage != null) {
             var targetTranslations = separateTranslations.get(targetLanguage);

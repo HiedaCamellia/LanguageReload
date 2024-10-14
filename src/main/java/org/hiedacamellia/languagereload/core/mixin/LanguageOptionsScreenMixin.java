@@ -1,8 +1,9 @@
 package org.hiedacamellia.languagereload.core.mixin;
 
 import jerozgen.languagereload.LanguageReload;
-import jerozgen.languagereload.config.Config;
-import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.ComponentPath;
+import net.minecraft.client.gui.components.StringWidget;
+import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.network.chat.Component;
 import org.hiedacamellia.languagereload.client.gui.LanguageEntry;
 import org.hiedacamellia.languagereload.client.gui.LanguageListWidget;
@@ -12,7 +13,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.options.LanguageSelectScreen;
 import net.minecraft.client.gui.screens.options.OptionsSubScreen;
 import net.minecraft.client.resources.language.LanguageManager;
-import org.hiedacamellia.languagereload.core.access.ILanguageOptionsScreen;
+import org.hiedacamellia.languagereload.core.interfaces.ILanguageOptionsScreen;
+import org.hiedacamellia.languagereload.core.config.CommonConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,12 +32,13 @@ public abstract class LanguageOptionsScreenMixin extends OptionsSubScreen implem
     @Unique private final LinkedList<String> selectedLanguages = new LinkedList<>();
     @Unique private final Map<String, LanguageEntry> languageEntries = new LinkedHashMap<>();
 
+
     @Inject(method = "<init>", at = @At("TAIL"))
     void onConstructed(Screen parent, Options options, LanguageManager languageManager, CallbackInfo ci) {
         var currentLangCode = languageManager.getSelected();
         if (!currentLangCode.equals(LanguageReload.NO_LANGUAGE))
             selectedLanguages.add(currentLangCode);
-        selectedLanguages.addAll(Config.getInstance().fallbacks);
+        selectedLanguages.addAll(CommonConfig.fallbacks.get());
         languageManager.getLanguages().forEach((code, language) ->
                 languageEntries.put(code, new LanguageEntry(this::refresh, code, language, selectedLanguages)));
 
@@ -50,8 +53,8 @@ public abstract class LanguageOptionsScreenMixin extends OptionsSubScreen implem
         selectedLanguageList = new LanguageListWidget(minecraft, it(), listWidth, height, Component.translatable("pack.selected.title"));
         availableLanguageList.setX(width / 2 - 4 - listWidth);
         selectedLanguageList.setX(width / 2 + 4);
-        layout.addBody(availableLanguageList);
-        layout.addBody(selectedLanguageList);
+        layout.addToContents(availableLanguageList);
+        layout.addToContents(selectedLanguageList);
         refresh();
 
         ci.cancel();
@@ -68,21 +71,21 @@ public abstract class LanguageOptionsScreenMixin extends OptionsSubScreen implem
                 } else super.setFocused(focused);
             }
         };
-        searchBox.setChangedListener(__ -> refresh());
+        searchBox.setResponder(__ -> refresh());
 
-        var header = layout.addHeader(DirectionalLayoutWidget.vertical().spacing(5));
-        header.getMainPositioner().alignHorizontalCenter();
-        header.add(new ComponentWidget(title, ComponentRenderer));
-        header.add(searchBox);
+        var header = layout.addToHeader(LinearLayout.vertical().spacing(5));
+        header.defaultCellSetting().alignHorizontallyCenter();
+        header.addChild(new StringWidget(title, minecraft.font));
+        header.addChild(searchBox);
     }
 
-    @Inject(method = "initTabNavigation", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "repositionElements", at = @At("HEAD"), cancellable = true)
     protected void onInitTabNavigation(CallbackInfo ci) {
-        super.initTabNavigation();
+        super.repositionElements();
 
         var listWidth = Math.min(width / 2 - 4, 200);
-        availableLanguageList.position(listWidth, layout);
-        selectedLanguageList.position(listWidth, layout);
+        availableLanguageList.updateSize(listWidth, layout);
+        selectedLanguageList.updateSize(listWidth, layout);
         availableLanguageList.setX(width / 2 - 4 - listWidth);
         selectedLanguageList.setX(width / 2 + 4);
         availableLanguageList.updateScroll();
@@ -93,8 +96,8 @@ public abstract class LanguageOptionsScreenMixin extends OptionsSubScreen implem
 
     @Inject(method = "onDone", at = @At("HEAD"), cancellable = true)
     private void onDone(CallbackInfo ci) {
-        if (client == null) return;
-        client.setScreen(parent);
+        if (minecraft == null) return;
+        minecraft.setScreen(lastScreen);
 
         var language = selectedLanguages.peekFirst();
         if (language == null) {
@@ -114,16 +117,16 @@ public abstract class LanguageOptionsScreenMixin extends OptionsSubScreen implem
         refreshList(availableLanguageList, languageEntries.values().stream()
                 .filter(entry -> {
                     if (selectedLanguageList.children().contains(entry)) return false;
-                    var query = searchBox.getComponent().toLowerCase(Locale.ROOT);
+                    var query = searchBox.getValue().toLowerCase(Locale.ROOT);
                     var langCode = entry.getCode().toLowerCase(Locale.ROOT);
-                    var langName = entry.getLanguage().getDisplayComponent().getString().toLowerCase(Locale.ROOT);
+                    var langName = entry.getLanguage().toComponent().getString().toLowerCase(Locale.ROOT);
                     return langCode.contains(query) || langName.contains(query);
                 }));
     }
 
     @Unique
     private void refreshList(LanguageListWidget list, Stream<? extends LanguageEntry> entries) {
-        var selectedEntry = list.getSelectedOrNull();
+        var selectedEntry = list.getSelected();
         list.setSelected(null);
         list.children().clear();
         entries.forEach(entry -> {
@@ -143,17 +146,17 @@ public abstract class LanguageOptionsScreenMixin extends OptionsSubScreen implem
 
     @Unique
     private void focusSearch() {
-        switchFocus(GuiNavigationPath.of(searchBox, this));
+        changeFocus(ComponentPath.path(searchBox, this));
     }
 
     @Override
     public void languagereload_focusList(LanguageListWidget list) {
-        switchFocus(GuiNavigationPath.of(list, this));
+        changeFocus(ComponentPath.path(list, this));
     }
 
     @Override
     public void languagereload_focusEntry(LanguageEntry entry) {
-        switchFocus(GuiNavigationPath.of(entry, entry.getParent(), this));
+        changeFocus(ComponentPath.path(entry, entry.getParent(), this));
     }
 
     @Unique
@@ -161,7 +164,7 @@ public abstract class LanguageOptionsScreenMixin extends OptionsSubScreen implem
         return (LanguageSelectScreen) (Object) this;
     }
 
-    LanguageSelectScreenMixin(Screen parent, GameOptions options, Component title) {
+    LanguageOptionsScreenMixin(Screen parent, Options options, Component title) {
         super(parent, options, title);
     }
 }

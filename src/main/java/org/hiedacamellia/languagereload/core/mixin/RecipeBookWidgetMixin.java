@@ -1,8 +1,9 @@
 package org.hiedacamellia.languagereload.core.mixin;
 
 import jerozgen.languagereload.LanguageReload;
-import net.minecraft.client.gui.screen.recipebook.RecipeBookWidget;
-import net.minecraft.util.Language;
+
+import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.locale.Language;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -10,13 +11,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.LinkedList;
 
-@Mixin(RecipeBookWidget.class)
+@Mixin(RecipeBookComponent.class)
 public class RecipeBookWidgetMixin {
-    @Inject(method = "triggerPirateSpeakEasterEgg", cancellable = true, at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/client/resource/language/LanguageManager;setLanguage(Ljava/lang/String;)V"))
+    @Inject(method = "pirateSpeechForThePeople", cancellable = true, at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/client/resources/language/LanguageManager;setSelected(Ljava/lang/String;)V"))
     void onLanguageSwitching$cancel(String search, CallbackInfo ci) {
         LanguageReload.setLanguage("en_pt", new LinkedList<>() {{
-            add(Language.DEFAULT_LANGUAGE);
+            add(Language.DEFAULT);
         }});
         ci.cancel();
     }

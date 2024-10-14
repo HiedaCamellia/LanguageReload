@@ -1,10 +1,10 @@
-package org.hiedacamellia.languagereload.core.access;
+package org.hiedacamellia.languagereload.core.interfaces;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
-@Environment(EnvType.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public interface ITranslationStorage {
     @Nullable String languagereload_getTargetLanguage();
 

@@ -1,4 +1,4 @@
-package org.hiedacamellia.languagereload.core.mixin;
+package org.hiedacamellia.languagereload.core.access;
 
 
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;

@@ -1,11 +1,11 @@
 package org.hiedacamellia.languagereload.core.mixin;
 
 import jerozgen.languagereload.LanguageReload;
-import jerozgen.languagereload.config.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.locale.Language;
 import net.minecraft.nbt.CompoundTag;
+import org.hiedacamellia.languagereload.core.config.CommonConfig;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.io.File;
+import java.util.LinkedList;
 
 @Mixin(Options.class)
 abstract class GameOptionsMixin {
@@ -46,20 +47,20 @@ abstract class GameOptionsMixin {
 
     @Unique
     private static void checkConfigLanguage(String language) {
-        var config = Config.getInstance();
-        if (!config.language.equals(language)) {
+        if (!CommonConfig.language.get().equals(language)) {
             LanguageReload.LOGGER.info(
                     "Game language ({}) and config language ({}) are different. Updating config",
                     language,
-                    config.language
+                    CommonConfig.language
             );
-            config.previousLanguage = config.language;
-            config.previousFallbacks = config.fallbacks;
-            config.language = language;
-            config.fallbacks.clear();
-            if (!language.equals(Language.DEFAULT))
-                config.fallbacks.add(Language.DEFAULT);
-            Config.save();
+            CommonConfig.previousLanguage.set(CommonConfig.language.get());
+            CommonConfig.previousFallbacks.set(CommonConfig.fallbacks.get());
+            CommonConfig.language.set(language);
+            CommonConfig.fallbacks.set(new LinkedList<>());
+            if (!language.equals(Language.DEFAULT)) {
+                var a = CommonConfig.fallbacks.get();a.add(Language.DEFAULT);
+                CommonConfig.fallbacks.set(a);
+            }
         }
     }
 }

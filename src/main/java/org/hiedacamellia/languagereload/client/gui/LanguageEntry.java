@@ -8,7 +8,7 @@ import net.minecraft.client.resources.language.LanguageInfo;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import org.hiedacamellia.languagereload.core.access.ILanguageOptionsScreen;
+import org.hiedacamellia.languagereload.core.interfaces.ILanguageOptionsScreen;
 import org.joml.Vector2i;
 
 import java.util.ArrayList;

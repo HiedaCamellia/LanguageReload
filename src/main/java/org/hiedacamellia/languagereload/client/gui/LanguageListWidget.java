@@ -9,8 +9,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.options.LanguageSelectScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import org.hiedacamellia.languagereload.core.access.ILanguageOptionsScreen;
-import org.hiedacamellia.languagereload.core.mixin.EntryListWidgetAccessor;
+import org.hiedacamellia.languagereload.core.interfaces.ILanguageOptionsScreen;
+import org.hiedacamellia.languagereload.core.access.EntryListWidgetAccessor;
 import org.jetbrains.annotations.Nullable;
 
 import static org.lwjgl.glfw.GLFW.*;

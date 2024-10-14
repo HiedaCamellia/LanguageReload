@@ -1,4 +1,4 @@
-package org.hiedacamellia.languagereload.core.mixin;
+package org.hiedacamellia.languagereload.core.access;
 
 import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.AdvancementProgress;

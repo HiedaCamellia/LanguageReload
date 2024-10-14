@@ -1,11 +1,11 @@
-package org.hiedacamellia.languagereload.core.access;
+package org.hiedacamellia.languagereload.core.interfaces;
 
 import org.hiedacamellia.languagereload.client.gui.LanguageEntry;
 import org.hiedacamellia.languagereload.client.gui.LanguageListWidget;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
-@Environment(EnvType.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public interface ILanguageOptionsScreen {
     void languagereload_focusList(LanguageListWidget list);
 

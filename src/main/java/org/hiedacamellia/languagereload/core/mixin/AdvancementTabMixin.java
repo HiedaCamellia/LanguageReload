@@ -1,11 +1,11 @@
 package org.hiedacamellia.languagereload.core.mixin;
 
-import com.mojang.authlib.minecraft.client.MinecraftClient;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.advancements.AdvancementTab;
 import net.minecraft.client.gui.screens.advancements.AdvancementWidget;
-import org.hiedacamellia.languagereload.core.access.IAdvancementsTab;
+import org.hiedacamellia.languagereload.core.access.AdvancementWidgetAccessor;
+import org.hiedacamellia.languagereload.core.interfaces.IAdvancementsTab;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

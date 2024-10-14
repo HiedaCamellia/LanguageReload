@@ -7,7 +7,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import org.hiedacamellia.languagereload.core.config.Commonconfig;
+import org.hiedacamellia.languagereload.core.config.CommonConfig;
 
 
 @Mod(Languagereload.MODID)
@@ -15,7 +15,7 @@ public class Languagereload {
     public static final String MODID = "languagereload";
 
     public Languagereload(IEventBus modEventBus, ModContainer modContainer) {
-        modContainer.registerConfig(ModConfig.Type.COMMON, Commonconfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
         if(FMLLoader.getDist().isClient())
             modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
