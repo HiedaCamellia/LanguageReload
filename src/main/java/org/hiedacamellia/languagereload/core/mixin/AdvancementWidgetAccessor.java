@@ -1,6 +1,5 @@
 package org.hiedacamellia.languagereload.core.mixin;
 
-import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.gui.screens.advancements.AdvancementTab;
@@ -15,9 +14,6 @@ import java.util.List;
 public interface AdvancementWidgetAccessor {
     @Accessor("tab")
     AdvancementTab languagereload_getTab();
-
-    @Accessor("advancementNode")
-    AdvancementNode languagereload_getAdvancement();
 
     @Accessor("display")
     DisplayInfo languagereload_getDisplay();

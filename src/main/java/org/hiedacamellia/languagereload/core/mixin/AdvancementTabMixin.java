@@ -1,6 +1,6 @@
 package org.hiedacamellia.languagereload.core.mixin;
 
-import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.advancements.AdvancementTab;
 import net.minecraft.client.gui.screens.advancements.AdvancementWidget;
@@ -14,7 +14,7 @@ import java.util.Map;
 @Mixin(AdvancementTab.class)
 public abstract class AdvancementTabMixin implements IAdvancementsTab {
     @Shadow @Final private Minecraft minecraft;
-    @Shadow @Final private Map<AdvancementHolder, AdvancementWidget> widgets;
+    @Shadow @Final private Map<Advancement, AdvancementWidget> widgets;
 
     @Override
     public void languagereload_recreateWidgets() {
@@ -22,7 +22,7 @@ public abstract class AdvancementTabMixin implements IAdvancementsTab {
             var newWidget = new AdvancementWidget(
                     ((AdvancementWidgetAccessor) widget).languagereload_getTab(),
                     minecraft,
-                    ((AdvancementWidgetAccessor) widget).languagereload_getAdvancement(),
+                    advancement,
                     ((AdvancementWidgetAccessor) widget).languagereload_getDisplay()
             );
             newWidget.setProgress(((AdvancementWidgetAccessor) widget).languagereload_getProgress());

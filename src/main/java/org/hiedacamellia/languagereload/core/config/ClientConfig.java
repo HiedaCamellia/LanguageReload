@@ -1,9 +1,9 @@
 package org.hiedacamellia.languagereload.core.config;
 
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.config.ModConfigEvent;
-import net.neoforged.neoforge.common.ModConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.hiedacamellia.languagereload.LanguageReload;
 
 import java.util.ArrayList;
@@ -11,24 +11,24 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-@EventBusSubscriber(modid = LanguageReload.MODID,bus = EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = LanguageReload.MODID,bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientConfig {
 
-    public static ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    public static ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
-    public static final ModConfigSpec.BooleanValue MULTILINGUAL_ITEM_SEARCH = BUILDER
+    public static final ForgeConfigSpec.BooleanValue MULTILINGUAL_ITEM_SEARCH = BUILDER
             .define("multilingualItemSearch", true);
 
-    public static final ModConfigSpec.ConfigValue<List<String>> FALLBACKS = BUILDER
+    public static final ForgeConfigSpec.ConfigValue<List<String>> FALLBACKS = BUILDER
             .define("fallbacks", new ArrayList<>());
 
-    public static final ModConfigSpec.ConfigValue<List<String>> PREVIOUS_FALLBACKS = BUILDER
+    public static final ForgeConfigSpec.ConfigValue<List<String>> PREVIOUS_FALLBACKS = BUILDER
             .define("previousFallbacks", new ArrayList<>());
 
-    public static final ModConfigSpec.ConfigValue<String> LANGUAGE = BUILDER
+    public static final ForgeConfigSpec.ConfigValue<String> LANGUAGE = BUILDER
             .define("language", "");
 
-    public static final ModConfigSpec.ConfigValue<String> PREVIOUS_LANGUAGE = BUILDER
+    public static final ForgeConfigSpec.ConfigValue<String> PREVIOUS_LANGUAGE = BUILDER
             .define("previousLanguage", "");
 
     public static boolean multilingualItemSearch = false;
@@ -46,6 +46,6 @@ public class ClientConfig {
         previousLanguage = PREVIOUS_LANGUAGE.get();
     }
 
-    public static ModConfigSpec SPEC = BUILDER.build();
+    public static ForgeConfigSpec SPEC = BUILDER.build();
 
 }

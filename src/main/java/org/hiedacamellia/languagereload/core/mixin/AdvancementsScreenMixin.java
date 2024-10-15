@@ -1,6 +1,6 @@
 package org.hiedacamellia.languagereload.core.mixin;
 
-import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.advancements.AdvancementTab;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Mixin(AdvancementsScreen.class)
 public abstract class AdvancementsScreenMixin extends Screen implements ClientAdvancements.Listener, IAdvancementsScreen {
-    @Shadow @Final private Map<AdvancementHolder, AdvancementTab> tabs;
+    @Shadow @Final private Map<Advancement, AdvancementTab> tabs;
 
     protected AdvancementsScreenMixin(Component title) {
         super(title);
