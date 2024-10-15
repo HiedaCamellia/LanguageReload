@@ -20,7 +20,7 @@ public class LanguageListWidget extends ObjectSelectionList<LanguageEntry> {
     private final LanguageSelectScreen screen;
 
     public LanguageListWidget(Minecraft client, LanguageSelectScreen screen, int width, int height, Component title) {
-        super(client, width, height - 83 - 16, 32 + 16, 24);
+        super(client, width, height - 83 - 16, 32 + 16, 24,24);
         this.title = title;
         this.screen = screen;
 
