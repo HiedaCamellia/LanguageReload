@@ -20,13 +20,11 @@ public class AbstractSelectionListMixin {
             int center = ((LanguageListWidget)(Object)this).getX0() + ((LanguageListWidget) (Object) this).getWidth() / 2;
             int minX = center - halfRowWidth;
             int maxX = center + halfRowWidth;
+            var scrollbarPositionX = ((LanguageListWidget) (Object) this).getScrollbarPosition();
             int m = Mth.floor(y - ((LanguageListWidget) (Object) this).getY0()) - ((LanguageListWidget) (Object) this).getHeaderHeight() + (int) ((LanguageListWidget) (Object) this).getScrollAmount() - 4 + 2;
-            int entryIndex = m / ((LanguageListWidget) (Object) this).getHeaderHeight();
-            var scrollbarX = ((LanguageListWidget) (Object) this).getScrollbarPosition();
-            var entryCount = ((LanguageListWidget) (Object) this).getItemCountA();
-
-            cir.setReturnValue(x < scrollbarX && x >= minX && x <= maxX && entryIndex >= 0 && m >= 0
-                    && entryIndex < entryCount ? ((LanguageListWidget) (Object) this).getChildren().get(entryIndex) : null);
+            int entryIndex = m / ((LanguageListWidget) (Object) this).getItemHeight();
+            cir.setReturnValue (x < scrollbarPositionX && x >= minX && x <= maxX && entryIndex >= 0 && m >= 0
+                    && entryIndex <  ((LanguageListWidget) (Object) this).getItemCountA() ? ((LanguageListWidget) (Object) this).getChildren().get(entryIndex) : null);
 
         }
     }
