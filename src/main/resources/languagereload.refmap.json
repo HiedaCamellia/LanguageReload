@@ -1,0 +1,138 @@
+{
+  "mappings": {
+    "org/hiedacamellia/languagereload/core/mixin/RecipeBookWidgetMixin": {
+      "Lnet/minecraft/client/resources/language/LanguageManager;setSelected(Ljava/lang/String;)V": "Lnet/minecraft/client/resources/language/LanguageManager;m_264110_(Ljava/lang/String;)V",
+      "pirateSpeechForThePeople": "Lnet/minecraft/client/gui/screens/recipebook/RecipeBookComponent;m_100335_(Ljava/lang/String;)V"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/TextDisplayEntityAccessor": {
+      "clientDisplayCache": "f_268719_:Lnet/minecraft/world/entity/Display$TextDisplay$CachedInfo;"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/LanguageManagerMixin": {
+      "onResourceManagerReload": "Lnet/minecraft/client/resources/language/LanguageManager;m_6213_(Lnet/minecraft/server/packs/resources/ResourceManager;)V"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/LanguageMixin": {
+      "inject": "Lnet/minecraft/locale/Language;m_128114_(Lnet/minecraft/locale/Language;)V"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/AbstractSelectionListMixin": {
+      "getEntryAtPosition(DD)Lnet/minecraft/client/gui/components/AbstractSelectionList$Entry;": "Lnet/minecraft/client/gui/components/AbstractSelectionList;m_93412_(DD)Lnet/minecraft/client/gui/components/AbstractSelectionList$Entry;"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/ClientChunkMapAccessor": {
+      "chunks": "f_104466_:Ljava/util/concurrent/atomic/AtomicReferenceArray;"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/TranslationStorageMixin": {
+      "Lnet/minecraft/locale/Language;loadFromJson(Ljava/io/InputStream;Ljava/util/function/BiConsumer;)V": "Lnet/minecraft/locale/Language;m_128108_(Ljava/io/InputStream;Ljava/util/function/BiConsumer;)V",
+      "appendFrom(Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)V": "Lnet/minecraft/client/resources/language/ClientLanguage;m_235035_(Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)V",
+      "getOrDefault": "Lnet/minecraft/client/resources/language/ClientLanguage;m_118919_(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;",
+      "loadFrom(Lnet/minecraft/server/packs/resources/ResourceManager;Ljava/util/List;Z)Lnet/minecraft/client/resources/language/ClientLanguage;": "Lnet/minecraft/client/resources/language/ClientLanguage;m_264420_(Lnet/minecraft/server/packs/resources/ResourceManager;Ljava/util/List;Z)Lnet/minecraft/client/resources/language/ClientLanguage;"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/GameOptionsMixin": {
+      "load": "Lnet/minecraft/client/Options;m_92140_()V",
+      "dataFix": "Lnet/minecraft/client/Options;m_92164_(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/EntryListWidgetAccessor": {
+      "scrolling": "f_93399_:Z"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/SignTextAccessor": {
+      "renderMessages": "f_276467_:[Lnet/minecraft/util/FormattedCharSequence;"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/AdvancementWidgetAccessor": {
+      "parent": "f_97248_:Lnet/minecraft/client/gui/screens/advancements/AdvancementWidget;",
+      "tab": "f_97241_:Lnet/minecraft/client/gui/screens/advancements/AdvancementTab;",
+      "children": "f_97249_:Ljava/util/List;",
+      "display": "f_97243_:Lnet/minecraft/advancements/DisplayInfo;",
+      "progress": "f_97250_:Lnet/minecraft/advancements/AdvancementProgress;"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/TranslatableTextContentMixin": {
+      "decompose": "Lnet/minecraft/network/chat/contents/TranslatableContents;m_237524_()V",
+      "Lnet/minecraft/locale/Language;getOrDefault(Ljava/lang/String;)Ljava/lang/String;": "Lnet/minecraft/locale/Language;m_6834_(Ljava/lang/String;)Ljava/lang/String;"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/LanguageOptionsScreenMixin": {
+      "init": "Lnet/minecraft/client/gui/screens/LanguageSelectScreen;m_7856_()V",
+      "keyPressed": "Lnet/minecraft/client/gui/screens/LanguageSelectScreen;m_7933_(III)Z",
+      "Lnet/minecraft/client/gui/navigation/CommonInputs;selected(I)Z": "Lnet/minecraft/client/gui/navigation/CommonInputs;m_278691_(I)Z",
+      "render": "Lnet/minecraft/client/gui/screens/LanguageSelectScreen;m_88315_(Lnet/minecraft/client/gui/GuiGraphics;IIF)V"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/KeyboardMixin": {
+      "handleDebugKeys": "Lnet/minecraft/client/KeyboardHandler;m_90932_(I)Z",
+      "Lnet/minecraft/client/gui/screens/Screen;wrapScreenError(Ljava/lang/Runnable;Ljava/lang/String;Ljava/lang/String;)V": "Lnet/minecraft/client/gui/screens/Screen;m_96579_(Ljava/lang/Runnable;Ljava/lang/String;Ljava/lang/String;)V",
+      "Lnet/minecraft/client/gui/components/ChatComponent;addMessage(Lnet/minecraft/network/chat/Component;)V": "Lnet/minecraft/client/gui/components/ChatComponent;m_93785_(Lnet/minecraft/network/chat/Component;)V",
+      "charTyped": "Lnet/minecraft/client/KeyboardHandler;m_90889_(JII)V",
+      "keyPress": "Lnet/minecraft/client/KeyboardHandler;m_90893_(JIIII)V"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/ClientChunkManagerAccessor": {
+      "storage": "f_104410_:Lnet/minecraft/client/multiplayer/ClientChunkCache$Storage;"
+    },
+    "org/hiedacamellia/languagereload/core/mixin/BookScreenAccessor": {
+      "cachedPage": "f_98256_:I"
+    }
+  },
+  "data": {
+    "searge": {
+      "org/hiedacamellia/languagereload/core/mixin/RecipeBookWidgetMixin": {
+        "Lnet/minecraft/client/resources/language/LanguageManager;setSelected(Ljava/lang/String;)V": "Lnet/minecraft/client/resources/language/LanguageManager;m_264110_(Ljava/lang/String;)V",
+        "pirateSpeechForThePeople": "Lnet/minecraft/client/gui/screens/recipebook/RecipeBookComponent;m_100335_(Ljava/lang/String;)V"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/TextDisplayEntityAccessor": {
+        "clientDisplayCache": "f_268719_:Lnet/minecraft/world/entity/Display$TextDisplay$CachedInfo;"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/LanguageManagerMixin": {
+        "onResourceManagerReload": "Lnet/minecraft/client/resources/language/LanguageManager;m_6213_(Lnet/minecraft/server/packs/resources/ResourceManager;)V"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/LanguageMixin": {
+        "inject": "Lnet/minecraft/locale/Language;m_128114_(Lnet/minecraft/locale/Language;)V"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/AbstractSelectionListMixin": {
+        "getEntryAtPosition(DD)Lnet/minecraft/client/gui/components/AbstractSelectionList$Entry;": "Lnet/minecraft/client/gui/components/AbstractSelectionList;m_93412_(DD)Lnet/minecraft/client/gui/components/AbstractSelectionList$Entry;"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/ClientChunkMapAccessor": {
+        "chunks": "f_104466_:Ljava/util/concurrent/atomic/AtomicReferenceArray;"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/TranslationStorageMixin": {
+        "Lnet/minecraft/locale/Language;loadFromJson(Ljava/io/InputStream;Ljava/util/function/BiConsumer;)V": "Lnet/minecraft/locale/Language;m_128108_(Ljava/io/InputStream;Ljava/util/function/BiConsumer;)V",
+        "appendFrom(Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)V": "Lnet/minecraft/client/resources/language/ClientLanguage;m_235035_(Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)V",
+        "getOrDefault": "Lnet/minecraft/client/resources/language/ClientLanguage;m_118919_(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;",
+        "loadFrom(Lnet/minecraft/server/packs/resources/ResourceManager;Ljava/util/List;Z)Lnet/minecraft/client/resources/language/ClientLanguage;": "Lnet/minecraft/client/resources/language/ClientLanguage;m_264420_(Lnet/minecraft/server/packs/resources/ResourceManager;Ljava/util/List;Z)Lnet/minecraft/client/resources/language/ClientLanguage;"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/GameOptionsMixin": {
+        "load": "Lnet/minecraft/client/Options;m_92140_()V",
+        "dataFix": "Lnet/minecraft/client/Options;m_92164_(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/EntryListWidgetAccessor": {
+        "scrolling": "f_93399_:Z"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/SignTextAccessor": {
+        "renderMessages": "f_276467_:[Lnet/minecraft/util/FormattedCharSequence;"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/AdvancementWidgetAccessor": {
+        "parent": "f_97248_:Lnet/minecraft/client/gui/screens/advancements/AdvancementWidget;",
+        "tab": "f_97241_:Lnet/minecraft/client/gui/screens/advancements/AdvancementTab;",
+        "children": "f_97249_:Ljava/util/List;",
+        "display": "f_97243_:Lnet/minecraft/advancements/DisplayInfo;",
+        "progress": "f_97250_:Lnet/minecraft/advancements/AdvancementProgress;"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/TranslatableTextContentMixin": {
+        "decompose": "Lnet/minecraft/network/chat/contents/TranslatableContents;m_237524_()V",
+        "Lnet/minecraft/locale/Language;getOrDefault(Ljava/lang/String;)Ljava/lang/String;": "Lnet/minecraft/locale/Language;m_6834_(Ljava/lang/String;)Ljava/lang/String;"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/LanguageOptionsScreenMixin": {
+        "init": "Lnet/minecraft/client/gui/screens/LanguageSelectScreen;m_7856_()V",
+        "keyPressed": "Lnet/minecraft/client/gui/screens/LanguageSelectScreen;m_7933_(III)Z",
+        "Lnet/minecraft/client/gui/navigation/CommonInputs;selected(I)Z": "Lnet/minecraft/client/gui/navigation/CommonInputs;m_278691_(I)Z",
+        "render": "Lnet/minecraft/client/gui/screens/LanguageSelectScreen;m_88315_(Lnet/minecraft/client/gui/GuiGraphics;IIF)V"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/KeyboardMixin": {
+        "handleDebugKeys": "Lnet/minecraft/client/KeyboardHandler;m_90932_(I)Z",
+        "Lnet/minecraft/client/gui/screens/Screen;wrapScreenError(Ljava/lang/Runnable;Ljava/lang/String;Ljava/lang/String;)V": "Lnet/minecraft/client/gui/screens/Screen;m_96579_(Ljava/lang/Runnable;Ljava/lang/String;Ljava/lang/String;)V",
+        "Lnet/minecraft/client/gui/components/ChatComponent;addMessage(Lnet/minecraft/network/chat/Component;)V": "Lnet/minecraft/client/gui/components/ChatComponent;m_93785_(Lnet/minecraft/network/chat/Component;)V",
+        "charTyped": "Lnet/minecraft/client/KeyboardHandler;m_90889_(JII)V",
+        "keyPress": "Lnet/minecraft/client/KeyboardHandler;m_90893_(JIIII)V"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/ClientChunkManagerAccessor": {
+        "storage": "f_104410_:Lnet/minecraft/client/multiplayer/ClientChunkCache$Storage;"
+      },
+      "org/hiedacamellia/languagereload/core/mixin/BookScreenAccessor": {
+        "cachedPage": "f_98256_:I"
+      }
+    }
+  }
+}

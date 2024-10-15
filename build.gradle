@@ -111,7 +111,7 @@ minecraft {
 }
 
 mixin{
-    add sourceSets.main, 'languagereload.mixins.refmap.json'
+    add sourceSets.main, 'languagereload.refmap.json'
     config 'languagereload.mixins.json'
 }
 
