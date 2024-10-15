@@ -90,7 +90,7 @@ public class LanguageReload {
         languageManager.setSelected(language);
         client.options.languageCode = language;
         client.options.save();
-
+        ClientConfig.load();
         reloadLanguages();
     }
 }
