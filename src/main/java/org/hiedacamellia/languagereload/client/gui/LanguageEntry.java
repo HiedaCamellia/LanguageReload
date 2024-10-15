@@ -18,18 +18,10 @@ import java.util.List;
 public class LanguageEntry extends ObjectSelectionList.Entry<LanguageEntry> {
     private static final Component DEFAULT_LANGUAGE_TOOLTIP = Component.translatable("language.default.tooltip");
 
-    private static final WidgetSprites ADD_TEXTURES = new WidgetSprites(
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/add.png"),
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/add_highlighted.png"));
-    private static final WidgetSprites REMOVE_TEXTURES = new WidgetSprites(
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/remove.png"),
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/remove_highlighted.png"));
-    private static final WidgetSprites MOVE_UP_TEXTURES = new WidgetSprites(
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/move_up.png"),
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/move_up_highlighted.png"));
-    private static final WidgetSprites MOVE_DOWN_TEXTURES = new WidgetSprites(
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/move_down.png"),
-            ResourceLocation.fromNamespaceAndPath(LanguageReload.MODID, "textures/language_selection/move_down_highlighted.png"));
+    private static final ResourceLocation TEXTURE = new ResourceLocation(LanguageReload.MODID, "textures/language_selection.png");
+    private static final int TEXTURE_WIDTH = 64;
+    private static final int TEXTURE_HEIGHT = 64;
+    private static final int HOVERED_V_OFFSET = 24;
 
     private final Minecraft client = Minecraft.getInstance();
 
@@ -39,10 +31,10 @@ public class LanguageEntry extends ObjectSelectionList.Entry<LanguageEntry> {
     private final Runnable refreshListsAction;
 
     private final List<AbstractWidget> buttons = new ArrayList<>();
-    private final Button addButton = addButton(15, 24, ADD_TEXTURES, __ -> add());
-    private final Button removeButton = addButton(15, 24, REMOVE_TEXTURES, __ -> remove());
-    private final Button moveUpButton = addButton(11, 11, MOVE_UP_TEXTURES, __ -> moveUp());
-    private final Button moveDownButton = addButton(11, 11, MOVE_DOWN_TEXTURES, __ -> moveDown());
+    private final Button addButton = addButton(15, 24, 0, 0, __ -> add());
+    private final Button removeButton = addButton(15, 24, 15, 0, __ -> remove());
+    private final Button moveUpButton = addButton(11, 11, 31, 0, __ -> moveUp());
+    private final Button moveDownButton = addButton(11, 11, 31, 13, __ -> moveDown());
 
     private LanguageListWidget parentList;
 
@@ -53,8 +45,8 @@ public class LanguageEntry extends ObjectSelectionList.Entry<LanguageEntry> {
         this.refreshListsAction = refreshListsAction;
     }
 
-    protected Button addButton(int width, int height, WidgetSprites textures, Button.OnPress action) {
-        var button = new CamelliaImageButton(0, 0, width, height, textures, action);
+    private Button addButton(int width, int height, int u, int v, Button.OnPress action) {
+        var button = new ImageButton(0, 0, width, height, u, v, HOVERED_V_OFFSET, TEXTURE, TEXTURE_WIDTH, TEXTURE_HEIGHT, action);
         button.visible = false;
         buttons.add(button);
         return button;

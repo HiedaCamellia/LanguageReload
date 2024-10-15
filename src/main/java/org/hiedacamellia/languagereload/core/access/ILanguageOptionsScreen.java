@@ -2,8 +2,8 @@ package org.hiedacamellia.languagereload.core.access;
 
 import org.hiedacamellia.languagereload.client.gui.LanguageEntry;
 import org.hiedacamellia.languagereload.client.gui.LanguageListWidget;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public interface ILanguageOptionsScreen {

@@ -2,8 +2,8 @@ package org.hiedacamellia.languagereload.core.access;
 
 
 import net.minecraft.client.resources.language.ClientLanguage;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public interface ILanguage {

@@ -39,9 +39,9 @@ abstract class TranslationStorageMixin extends Language implements ITranslationS
         separateTranslationsOnLoad = Maps.newHashMap();
     }
 
-    @Redirect(method = "appendFrom(Ljava/lang/String;Ljava/util/List;Ljava/util/Map;Ljava/util/Map;)V", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/locale/Language;loadFromJson(Ljava/io/InputStream;Ljava/util/function/BiConsumer;Ljava/util/function/BiConsumer;)V"))
-    private static void onInternalLoad$saveSeparately(InputStream inputStream, BiConsumer<String, String> entryConsumer, BiConsumer<String, Component> entry,String langCode) {
+    @Redirect(method = "appendFrom(Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)V", at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/locale/Language;loadFromJson(Ljava/io/InputStream;Ljava/util/function/BiConsumer;)V"))
+    private static void onInternalLoad$saveSeparately(InputStream inputStream, BiConsumer<String, String> entryConsumer,String langCode) {
         if (ClientConfig.multilingualItemSearch) {
             Language.loadFromJson(inputStream, entryConsumer.andThen((key, value) ->
                     separateTranslationsOnLoad.computeIfAbsent(langCode, k -> Maps.newHashMap()).put(key, value)));

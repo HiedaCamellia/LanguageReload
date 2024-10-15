@@ -69,7 +69,7 @@ abstract class TranslatableTextContentMixin implements ComponentContents {
     }
 
     @Inject(method = "decompose", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/locale/Language;getComponent(Ljava/lang/String;)Lnet/minecraft/network/chat/Component;"))
+            target = "Lnet/minecraft/locale/Language;getInstance()Lnet/minecraft/locale/Language;"))
     void onUpdatedecomposedParts$clearCache(CallbackInfo ci) {
         previousTargetLanguage = null;
         separatedecomposedPartsCache.clear();

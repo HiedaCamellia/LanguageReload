@@ -2,28 +2,29 @@
   "required": true,
   "minVersion": "0.8",
   "package": "org.hiedacamellia.languagereload.core.mixin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_17",
   "refmap": "languagereload.refmap.json",
   "mixins": [
   ],
   "client": [
+    "AbstractSelectionListMixin",
     "AdvancementsScreenMixin",
     "AdvancementTabMixin",
+    "AdvancementWidgetAccessor",
+    "BookScreenAccessor",
+    "ClientChunkManagerAccessor",
+    "ClientChunkMapAccessor",
+    "EntryListWidgetAccessor",
     "GameOptionsMixin",
     "KeyboardMixin",
     "LanguageManagerMixin",
     "LanguageMixin",
     "LanguageOptionsScreenMixin",
     "RecipeBookWidgetMixin",
-    "TranslatableTextContentMixin",
-    "TranslationStorageMixin",
-    "AdvancementWidgetAccessor",
-    "BookScreenAccessor",
-    "ClientChunkManagerAccessor",
-    "ClientChunkMapAccessor",
-    "EntryListWidgetAccessor",
     "SignTextAccessor",
-    "TextDisplayEntityAccessor"
+    "TextDisplayEntityAccessor",
+    "TranslatableTextContentMixin",
+    "TranslationStorageMixin"
   ],
   "injectors": {
     "defaultRequire": 1

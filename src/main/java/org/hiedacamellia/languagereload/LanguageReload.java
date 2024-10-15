@@ -27,8 +27,8 @@ public class LanguageReload {
     public static boolean shouldSetSystemLanguage = false;
     public static final String NO_LANGUAGE = "*";
 
-    public LanguageReload(IEventBus modEventBus, ModContainer modContainer) {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ClientConfig.SPEC);
+    public LanguageReload() {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
     }
 
     public static void reloadLanguages() {

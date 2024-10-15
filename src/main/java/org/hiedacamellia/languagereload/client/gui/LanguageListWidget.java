@@ -13,6 +13,8 @@ import org.hiedacamellia.languagereload.core.access.ILanguageOptionsScreen;
 import org.hiedacamellia.languagereload.core.mixin.EntryListWidgetAccessor;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 public class LanguageListWidget extends ObjectSelectionList<LanguageEntry> {
@@ -20,7 +22,7 @@ public class LanguageListWidget extends ObjectSelectionList<LanguageEntry> {
     private final LanguageSelectScreen screen;
 
     public LanguageListWidget(Minecraft client, LanguageSelectScreen screen, int width, int height, Component title) {
-        super(client, width, height - 83 - 16, 32 + 16, 24,24);
+        super(client, width, height, 48, height - 55 + 4, 24);
         this.title = title;
         this.screen = screen;
 
@@ -32,7 +34,7 @@ public class LanguageListWidget extends ObjectSelectionList<LanguageEntry> {
     protected void renderHeader(GuiGraphics context, int x, int y) {
         var headerText = title.copy().withStyle(ChatFormatting.UNDERLINE, ChatFormatting.BOLD);
         int headerPosX = x + width / 2 - minecraft.font.width(headerText) / 2;
-        int headerPosY = Math.min(this.getY() + 3, y);
+        int headerPosY = Math.min(y0 + 3, y);
         context.drawString(minecraft.font, headerText, headerPosX, headerPosY, 0xFFFFFF, false);
     }
 
@@ -82,22 +84,20 @@ public class LanguageListWidget extends ObjectSelectionList<LanguageEntry> {
         return ((EntryListWidgetAccessor) this).languagereload_isScrolling();
     }
 
-    @Override
-    @Nullable
-    public LanguageEntry getEntryAtPosition(double x, double y) {
-        int halfRowWidth = this.getRowWidth() / 2;
-        int center = this.getX() + width / 2;
-        int minX = center - halfRowWidth;
-        int maxX = center + halfRowWidth;
-        int m = Mth.floor(y - this.getY()) - headerHeight + (int) this.getScrollAmount() - 4 + 2;
-        int entryIndex = m / itemHeight;
-        var hasScrollbar = this.scrollbarVisible();
-        var scrollbarX = this.getScrollbarPosition();
-        var entryCount = this.getItemCount();
-        return x >= minX && x <= maxX && (!hasScrollbar || x < scrollbarX) && entryIndex >= 0 && m >= 0 && entryIndex < entryCount
-                ? this.children().get(entryIndex)
-                : null;
-    }
+//    @Override
+//    @Nullable
+//    public LanguageEntry getEntryAtPosition(double x, double y) {
+//        int halfRowWidth = this.getRowWidth() / 2;
+//        int center = x0 + width / 2;
+//        int minX = center - halfRowWidth;
+//        int maxX = center + halfRowWidth;
+//        int m = Mth.floor(y - y0) - headerHeight + (int) this.getScrollAmount() - 4 + 2;
+//        int entryIndex = m / itemHeight;
+//        var scrollbarX = this.getScrollbarPosition();
+//        var entryCount = this.getItemCount();
+//        return (x < scrollbarX && x >= minX && x <= maxX && entryIndex >= 0 && m >= 0
+//                && entryIndex < entryCount ? this.children().get(entryIndex) : null);
+//    }
 
     public LanguageSelectScreen getScreen() {
         return screen;
@@ -113,11 +113,32 @@ public class LanguageListWidget extends ObjectSelectionList<LanguageEntry> {
     }
 
     @Override
-    protected int getScrollbarPosition() {
+    public int getScrollbarPosition() {
         return this.getRight() - 6;
     }
 
     public void updateScroll() {
         this.setScrollAmount(this.getScrollAmount());
+    }
+
+    public int getX0() {
+        return x0;
+    }
+    public int getY0() {
+        return y0;
+    }
+    public int getHeaderHeight() {
+        return headerHeight;
+    }
+
+    public int getItemHeight(){
+        return itemHeight;
+    }
+
+    public int getItemCountA(){
+        return getItemCount();
+    }
+    public List<LanguageEntry> getChildren(){
+        return children();
     }
 }

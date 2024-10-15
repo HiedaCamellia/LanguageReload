@@ -1,7 +1,7 @@
 package org.hiedacamellia.languagereload.core.access;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 @OnlyIn(Dist.CLIENT)
