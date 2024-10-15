@@ -64,6 +64,7 @@ abstract class GameOptionsMixin {
                 ClientConfig.FALLBACKS.set(a);
             }
             ClientConfig.SPEC.save();
+            ClientConfig.load();
         }
     }
 }

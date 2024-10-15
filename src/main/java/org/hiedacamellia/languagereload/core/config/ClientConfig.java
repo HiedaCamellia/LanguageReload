@@ -39,11 +39,16 @@ public class ClientConfig {
 
     @SubscribeEvent
     public static void onLoad(final ModConfigEvent event){
+        load();
+    }
+
+    public static void load(){
         multilingualItemSearch = MULTILINGUAL_ITEM_SEARCH.get();
         fallbacks = new LinkedList<>(FALLBACKS.get());
         previousFallbacks = new LinkedList<>(PREVIOUS_FALLBACKS.get());
         language = LANGUAGE.get();
         previousLanguage = PREVIOUS_LANGUAGE.get();
+
     }
 
     public static ModConfigSpec SPEC = BUILDER.build();
